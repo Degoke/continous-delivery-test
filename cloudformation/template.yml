@@ -1,4 +1,4 @@
-AWSTemplatFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: "2010-09-09"
 
 Description: Test instance and security group
 
@@ -14,9 +14,11 @@ Resources:
   
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
-    SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: 22
-        ToPort: 22
-        CidrIp: 0.0.0.0/0
+    Properties:
+      GroupDescription: Enable ssh via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
 

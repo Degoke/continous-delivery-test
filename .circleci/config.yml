@@ -11,7 +11,7 @@ jobs:
           name: Create cloudformation stack
           command: |
             aws cloudformation create-stack \
-            --template-file cloudformation/template.yml \
+            --template-body file://cloudformation/template.yml \
             --stack-name testStack-${CIRCLE_WORKFLOW_ID:0:5} \
             --region us-east-1
 
