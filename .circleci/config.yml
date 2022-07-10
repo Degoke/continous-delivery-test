@@ -110,7 +110,8 @@ jobs:
             aws cloudformation update-stack \
             --template-body file://cloudformation/cloudfront.yml \
             --stack-name production-distro \
-            --parameters ParameterKey=PipelineID,ParameterValue="mybucket-${CIRCLE_WORKFLOW_ID:0:7"}
+            --parameters ParameterKey=PipelineID,ParameterValue="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy_enviroment
 
   clean_up_old_frontend:
     docker:
