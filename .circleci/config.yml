@@ -1,5 +1,15 @@
 version: 2.1
 
+commands:
+
+  destroy_enviroment:
+    steps:
+    - run:
+        name: Destroy enviroment
+        when: on_fail
+        command: |
+          aws cloudformation delete-stack --stackName myStack-${CIRCLE_WORKFLOW_ID:0:7}
+
 jobs:
 
   configure_infrastructure:
@@ -25,38 +35,40 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt main.yml
         
-
-  # create_infrastructure:
-  #   docker:
-  #     - image: amazon/aws-cli
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Create cloudformation stack
-  #         command: |
-  #           aws cloudformation create-stack \
-  #           --template-body file://cloudformation/template.yml \
-  #           --stack-name testStack-${CIRCLE_WORKFLOW_ID:0:5} \
-  #           --region us-east-1
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create cloudformation stack
+          command: |
+            aws cloudformation create-stack \
+            --template-body file://cloudformation/template.yml \
+            --stack-name testStack-${CIRCLE_WORKFLOW_ID:0:7} \
+            --region us-east-1
 
   smoke_test:
     docker: 
       - image: alpine:latest
     steps:
-      - run: apk add --update curl
+      # - run: apk add --update curl
       - run:
-          name: smoke test
-          command: |
-            URL="https://blog.udacity.com/"
-            if curl -s --head ${URL}
-            then
-              return 0
-            else
-              return 1
-            fi
+          name: test job
+          commnd: return 1
+          # command: |
+          #   URL="https://blog.udacity.com/"
+          #   if curl -s --head ${URL}
+          #   then
+          #     return 0
+          #   else
+          #     return 1
+          #   fi
+      - destroy_enviroment
 
 workflows:
 
   my_workflow:
     jobs:
+      - create_infrastructure
       - smoke_test
