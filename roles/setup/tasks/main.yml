@@ -37,8 +37,8 @@
 
 - name: copy index test page
   template:
-    src: files/index.js
-    dest: ~/web/index.js
+    src: "files/index.js"
+    dest: "~/web/index.js"
 
 - name: Executing node
   shell: |
