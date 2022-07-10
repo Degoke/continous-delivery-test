@@ -37,5 +37,4 @@ workflows:
 
   my_workflow:
     jobs:
-      - create_infrastructure
-ssh
+      - configure_infrastructure
