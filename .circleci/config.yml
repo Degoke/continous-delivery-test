@@ -120,12 +120,12 @@ jobs:
       - checkout
       - run: yum install -y tar gzip
       - attach_workspace:
-        at: ~/
+          at: ~/
       - run:
-        name: destroy previous s3 bucket and stack
-        command: |
-          export OldBucketID=$(cat ~textfile.txt)
-          awsrm "s3://${OldBucketID" --recursive
+          name: destroy previous s3 bucket and stack
+          command: |
+            export OldBucketID=$(cat ~textfile.txt)
+            aws s3 rm "s3://${OldBucketID" --recursive
 
 workflows:
 
