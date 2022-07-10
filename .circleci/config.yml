@@ -107,7 +107,7 @@ jobs:
       - run:
           name: Execute cloudfront script
           command: |
-            aws cloudformation update-stack \ 
+            aws cloudformation update-stack \
             --template-body file://cloudformation/cloudfront.yml \
             --stack-name production-distro \
             --parameters ParameterKey=PipelineID,ParameterValue="mybucket-${CIRCLE_WORKFLOW_ID:0:7"}
