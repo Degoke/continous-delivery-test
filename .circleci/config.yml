@@ -55,7 +55,7 @@ jobs:
       # - run: apk add --update curl
       - run:
           name: test job
-          commnd: return 1
+          command: return 1
           # command: |
           #   URL="https://blog.udacity.com/"
           #   if curl -s --head ${URL}
